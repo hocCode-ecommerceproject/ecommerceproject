@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using ecommerceproject.DbContexts;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+// Set dbPath to DEV when in development mode (see launchSettings.json) else set PROD
+var dbPath = builder.Environment.IsDevelopment() ? builder.Configuration["ConnectionStrings:DEV"] : builder.Configuration["ConnectionStrings:PROD"];
+builder.Services.AddDbContext<DataContext>(opts => opts.UseSqlite($"Data Source={dbPath}"));
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
