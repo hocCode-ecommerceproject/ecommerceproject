@@ -11,7 +11,8 @@ var app = builder.Build();
 
 // Set dbPath to DEV when in development mode (see launchSettings.json) else set PROD
 var dbPath = builder.Environment.IsDevelopment() ? builder.Configuration["ConnectionStrings:DEV"] : builder.Configuration["ConnectionStrings:PROD"];
-builder.Services.AddDbContext<DataContext>(opts => opts.UseSqlite($"Data Source={dbPath}"));
+
+builder.Services.AddDbContext<DataContext>(opts => opts.UseSqlite($"Data Source=./Database/dev.db"));
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

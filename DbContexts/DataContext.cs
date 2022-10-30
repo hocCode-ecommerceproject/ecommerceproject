@@ -5,15 +5,14 @@ namespace ecommerceproject.DbContexts;
 
 public class DataContext : DbContext
 {
-	public DbSet<Product> Products => Set<Product>();
-	public DbSet<User> Users => Set<User>();
-	public DbSet<Customer> Customers => Set<Customer>();
+	public DbSet<Customer> Customers { get; set; }
+	public DbSet<Product> Products { get; set; }
+	public DbSet<Order> Orders { get; set; }
 
+	public DataContext() { }
 
-	public DataContext(DbContextOptions<DataContext> options) : base(options)
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
-
+		optionsBuilder.UseSqlite("Data Source=./Database/dev.db");
 	}
-
-
 }
